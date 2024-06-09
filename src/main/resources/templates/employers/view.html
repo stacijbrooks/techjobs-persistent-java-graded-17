@@ -16,9 +16,12 @@
                 <a th:href="@{'/view/' + ${job.id}}" th:text="${job.name}"></a>
             </li>
     </ul>
-    </p>
+
+<!--    Added for #4 of Controller Task 2-->
+    <p>th:if="${employer.jobs.size() == 0}">No jobs available for this employer.</p>
 </div>
 
-
+<!--    Added for #4 of Controller Task 2-->
+<a th:href="@{/employers}">Back to Employers</a>
 </body>
 </html>
