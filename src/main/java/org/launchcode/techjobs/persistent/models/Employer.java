@@ -18,6 +18,7 @@ public class Employer extends AbstractEntity {
 
     //Mapping to job entities. Task 2, Controller #4
     @OneToMany(mappedBy = "employer")
+    //join id field
     private List<Job> jobs;
 
     //No-arg constructor

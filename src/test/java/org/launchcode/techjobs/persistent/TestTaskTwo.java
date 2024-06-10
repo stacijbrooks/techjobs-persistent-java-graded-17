@@ -11,6 +11,7 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.jupiter.api.Test;
 import org.launchcode.techjobs.persistent.controllers.EmployerController;
+import org.launchcode.techjobs.persistent.controllers.SkillController;
 import org.launchcode.techjobs.persistent.models.Employer;
 import org.launchcode.techjobs.persistent.models.Skill;
 import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
@@ -372,25 +373,25 @@ public class TestTaskTwo extends AbstractTest {
             annotation = indexMethod.getDeclaredAnnotation(GetMapping.class);
         }
 //
-//        assertNotNull(annotation, "index method must have a routing annotation");
-//
-//        Method annotationValueMethod = annotation.getClass().getMethod("value");
-//        String[] values = ((String[]) annotationValueMethod.invoke(annotation));
-//        assertEquals(1, values.length, "The routing annotation for index must have a value");
-//        assertEquals("/", values[0], "The value parameter for the routing annotation must be the empty string");
-//
+        assertNotNull(annotation, "index method must have a routing annotation");
+
+        Method annotationValueMethod = annotation.getClass().getMethod("value");
+        String[] values = ((String[]) annotationValueMethod.invoke(annotation));
+        assertEquals(1, values.length, "The routing annotation for index must have a value");
+        assertEquals("/", values[0], "The value parameter for the routing annotation must be the empty string");
+
 //        // Verify that index calls employerRepository.findAll()
-//        new Expectations() {{
-//            employerRepository.findAll();
-//        }};
-//
-//        Model model = new ExtendedModelMap();
-//        EmployerController employerController = new EmployerController();
-//        Field employerRepositoryField = employerControllerClass.getDeclaredField("employerRepository");
-//        employerRepositoryField.setAccessible(true);
-//        employerRepositoryField.set(employerController, employerRepository);
-//        indexMethod.invoke(employerController, model);
-//    }
+        new Expectations() {{
+            employerRepository.findAll();
+        }};
+
+        Model model = new ExtendedModelMap();
+        EmployerController employerController = new EmployerController();
+        Field employerRepositoryField = employerControllerClass.getDeclaredField("employerRepository");
+        employerRepositoryField.setAccessible(true);
+        employerRepositoryField.set(employerController, employerRepository);
+        indexMethod.invoke(employerController, model);
+    }
 //
 //    /*
 //    * Verify that processAddEmployerForm saves a new employer to the database
