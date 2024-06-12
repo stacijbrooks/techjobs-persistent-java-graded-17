@@ -56,13 +56,21 @@ public class SkillController {
     }
 
     // Display details of a specific skill
+    // Mapping HTTP GET requests to "/view/{skillId}" to this method
     @GetMapping("view/{skillId}")
     public String displayViewSkill(Model model, @PathVariable int skillId) {
-        // Find the skill by its ID
+        // Find the skill by its ID using the repository
         Optional<Skill> optSkill = skillRepository.findById(skillId);
+
+        // Check if the skill is present in the optional
         if (optSkill.isPresent()) {
-            // If the skill is found, add it to the model and render the view skill template
-            model.addAttribute("skill", optSkill.get());
+            // If present, get the skill from the optional
+            Skill skill = optSkill.get();
+
+            // Add the skill to the model to pass it to the view
+            model.addAttribute("skill", skill);
+
+            // Return the view name "skills/view" to display the skill
             return "skills/view";
         } else {
             // If the skill is not found, redirect to the skills index page
@@ -70,8 +78,10 @@ public class SkillController {
         }
     }
 
-    // No-arg constructor
-    public SkillController() {
-    }
 }
+
+//    // No-arg constructor
+//    public SkillController() {
+//    }
+
 

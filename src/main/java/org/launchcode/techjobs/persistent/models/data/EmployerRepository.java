@@ -7,6 +7,7 @@ import java.util.Optional;
 
 
 //Data Layer in Task 2
-public interface EmployerRepository extends CrudRepository<Employer, Long> {
-    //Optional<Employer> findById(int employerId);
+public interface EmployerRepository extends CrudRepository<Employer, Integer> {
+//    Optional<Employer> findById(int employerId);
+
 }
