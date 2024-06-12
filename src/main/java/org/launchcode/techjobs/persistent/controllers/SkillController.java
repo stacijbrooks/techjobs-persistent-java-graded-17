@@ -23,9 +23,9 @@ public class SkillController {
     private SkillRepository skillRepository;
 
     // Index method to list all skills
-    @GetMapping
+    @GetMapping(value = "/")
     public String index(Model model) {
-        // Add all skills to the model and render the skills index template
+        model.addAttribute("title", "All Skills");
         model.addAttribute("skills", skillRepository.findAll());
         return "skills/index";
     }
@@ -42,17 +42,19 @@ public class SkillController {
     @PostMapping("add")
     public String processAddSkillForm(@ModelAttribute @Valid Skill newSkill,
                                       Errors errors, Model model) {
-        // Validate the submitted skill object
+
+        //Setting up the model attributes for displaying the 'Add Skill' form, including handling validation errors.E
         if (errors.hasErrors()) {
-            // If there are errors, render the add skill form template again with error messages
+            model.addAttribute("title", "Add Skill");
+            model.addAttribute(newSkill);
             return "skills/add";
         }
 
         // Save the valid skill object to the database
         skillRepository.save(newSkill);
 
-        // Redirect to the skills index page after adding the skill
-        return "redirect:/skills";
+        // Redirect
+        return "redirect:";
     }
 
     // Display details of a specific skill
@@ -74,7 +76,7 @@ public class SkillController {
             return "skills/view";
         } else {
             // If the skill is not found, redirect to the skills index page
-            return "redirect:/skills";
+            return "redirect:../";
         }
     }
 

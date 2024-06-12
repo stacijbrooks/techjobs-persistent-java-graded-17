@@ -9,9 +9,9 @@ public class Skill extends AbstractEntity {
 
     private String description;
 
-    //No-arg Constructor
-    public Skill() {
-    }
+//    //No-arg Constructor
+//    public Skill() {
+//    }
 
     //Getters and Setters
 
