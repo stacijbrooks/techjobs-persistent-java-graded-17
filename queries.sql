@@ -1,4 +1,8 @@
 --Part 1
+id INT
+employer VARCHAR(255)
+-name VARCHAR(255)
+skills VARCHAR(255)
 
 --Part 2
 SELECT name
@@ -9,3 +13,7 @@ WHERE location = 'St. Louis City';
 DROP TABLE IF EXISTS job;
 
 --Part 4
+SELECT * FROM skill
+INNER JOIN job_skills ON job_skills.skills_id = skill.id
+WHERE job_skills.jobs_id IS NOT NULL
+ORDER BY name ASC;

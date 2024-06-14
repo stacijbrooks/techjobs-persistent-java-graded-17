@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,14 +30,15 @@ public class HomeController {
     @Autowired
     private EmployerRepository employerRepository;
 
+    //Task 4: Update HomeController skillRepository
     @Autowired
     private SkillRepository skillRepository;
 
+
+
     @RequestMapping("/")
     public String index(Model model) {
-
         model.addAttribute("title", "MyJobs");
-
         return "index";
     }
 
@@ -51,7 +53,7 @@ public class HomeController {
     }
 
 
-    //Updated & Modified for Task 3
+    //Updated & Modified for Task 3 and updated for Task 4.
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                     Errors errors, Model model,
@@ -65,18 +67,30 @@ public class HomeController {
             return "add";
         }
 
-        // Retrieve the selected employer using the employerId
-        Optional<Employer> result = employerRepository.findById(employerId);
-        if (result.isPresent()) {
-            Employer employer = result.get();
-            // Assign the retrieved employer to the newJob object
-            newJob.setEmployer(employer);
-        } else {
+        // Retrieve the selected employer using the employerId. Updated during Task 4.
+        Optional<Employer> employerResult = employerRepository.findById(employerId);
+        if (employerResult.isEmpty()) {
             model.addAttribute("title", "Add Job");
             model.addAttribute("employers", employerRepository.findAll());
             model.addAttribute("skills", skillRepository.findAll());
+            model.addAttribute("employerError", "Invalid employer ID");
             return "add";
+
+//        Optional<Employer> employerResult = employerRepository.findById(employerId);
+//        if (employerResult.isPresent()) {
+//            Employer employer = employerResult.get();
+//            // Assign the retrieved employer to the newJob object
+//            newJob.setEmployer(employer);
+//        } else {
+//            model.addAttribute("title", "Add Job");
+//            model.addAttribute("employers", employerRepository.findAll());
+//            model.addAttribute("skills", skillRepository.findAll());
+//            return "add";
         }
+
+        //Task 4: Added this to HomeController
+        Employer employer = employerResult.get();
+        newJob.setEmployer(employer);
 
         // Retrieve the selected skills using the list of skill IDs
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
@@ -88,10 +102,17 @@ public class HomeController {
         return "redirect:";
     }
 
+    //Updated for Task 4.
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
+        Optional<Job> jobResult = jobRepository.findById(jobId);
+        if (jobResult.isEmpty()) {
+            model.addAttribute("title", "Invalid Job ID");
+            return "redirect:/";
+        }
 
-            return "view";
+        Job job = jobResult.get();
+        model.addAttribute("job", job);
+        return "view";
     }
-
 }

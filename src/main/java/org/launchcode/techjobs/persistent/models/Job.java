@@ -15,7 +15,7 @@ public class Job extends AbstractEntity {
 
     // Task 3: Job has a many-to-one association with Employer.
     @ManyToOne
-    //@JoinColumn(name = "employer_id") // Specifies the foreign key column
+    @JoinColumn(name = "employer_id") // Specifies the foreign key column
     @NotNull(message = "Employer is required")
     private Employer employer;
 
@@ -34,18 +34,22 @@ public class Job extends AbstractEntity {
     // Getters and setters.
 
     public Employer getEmployer() {
+
         return employer;
     }
 
     public void setEmployer(Employer employer) {
+
         this.employer = employer;
     }
 
     public List<Skill> getSkills() {
+
         return skills;
     }
 
     public void setSkills(List<Skill> skills) {
+
         this.skills = skills;
     }
 }
