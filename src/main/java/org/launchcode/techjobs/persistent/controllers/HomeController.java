@@ -67,6 +67,12 @@ public class HomeController {
             return "add";
         }
 
+
+        // Retrieve the selected skills using the list of skill IDs
+        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+        // Assign the retrieved skills to the newJob object
+        newJob.setSkills(skillObjs);
+
         // Retrieve the selected employer using the employerId. Updated during Task 4.
         Optional<Employer> employerResult = employerRepository.findById(employerId);
         if (employerResult.isEmpty()) {
@@ -91,11 +97,6 @@ public class HomeController {
         //Task 4: Added this to HomeController
         Employer employer = employerResult.get();
         newJob.setEmployer(employer);
-
-        // Retrieve the selected skills using the list of skill IDs
-        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-        // Assign the retrieved skills to the newJob object
-        newJob.setSkills(skillObjs);
 
         // Save the new job to the database
         jobRepository.save(newJob);
