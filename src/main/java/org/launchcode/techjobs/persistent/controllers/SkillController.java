@@ -45,8 +45,8 @@ public class SkillController {
 
         //Setting up the model attributes for displaying the 'Add Skill' form, including handling validation errors.E
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Skill");
-            model.addAttribute(newSkill);
+//            model.addAttribute("title", "Add Skill");
+//            model.addAttribute(newSkill);
             return "skills/add";
         }
 
@@ -54,7 +54,7 @@ public class SkillController {
         skillRepository.save(newSkill);
 
         // Redirect
-        return "redirect:";
+        return "redirect:/skills";
     }
 
     // Display details of a specific skill
@@ -68,7 +68,7 @@ public class SkillController {
         // Check if the skill exists in the database
         if (optSkill.isPresent()) {
             // If the skill is found, retrieve it from the Optional
-            Skill skill = optSkill.get();
+            Skill skill = (Skill) optSkill.get();
 
             // Add the retrieved skill to the model attribute "skill"
             model.addAttribute("skill", skill);
