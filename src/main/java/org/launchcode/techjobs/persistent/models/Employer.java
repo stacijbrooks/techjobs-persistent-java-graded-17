@@ -13,8 +13,8 @@ import java.util.List;
 public class Employer extends AbstractEntity {
 
     //Task 3. Add a job class to employer. Needs name parameter
-    @OneToMany(mappedBy = "employer")
-    //@JoinColumn(name = "employer_id")
+    @OneToMany
+    @JoinColumn(name = "employer_id")
     private List<Job> jobs = new ArrayList<>();
 
     //Models in Task 2
