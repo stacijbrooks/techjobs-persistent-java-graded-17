@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 public class Skill extends AbstractEntity {
 
-    @NotNull(message = "Description is required")
+
     @NotBlank(message = "Description is required")
     @Size(min = 1, max = 500, message = "Description must be between 1 and 500 characters")
     private String description;
@@ -28,27 +28,28 @@ public class Skill extends AbstractEntity {
     public Skill() {
     }
 
+    public Skill(String description, List<Job> jobs) {
+        this.description = description;
+        this.jobs = jobs;
+    }
+
     //Getters and Setters
 
-    public String getDescription() {
 
+    public String getDescription() {
         return description;
     }
 
-    public List<Job> getJobs() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
+    public List<Job> getJobs() {
         return jobs;
     }
 
     public void setJobs(List<Job> jobs) {
-
         this.jobs = jobs;
     }
-
-    public void setDescription(String description) {
-
-        this.description = description;
-
-
-    }
 }
+
