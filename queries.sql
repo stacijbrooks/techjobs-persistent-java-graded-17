@@ -7,10 +7,10 @@ skills VARCHAR(255)
 --Part 2
 SELECT name
 FROM employer
-WHERE location = 'St. Louis City';
+WHERE location = 'Saint Louis';
 
 --Part 3
-DROP TABLE IF EXISTS job;
+DROP TABLE job;
 
 --Part 4
 SELECT * FROM skill

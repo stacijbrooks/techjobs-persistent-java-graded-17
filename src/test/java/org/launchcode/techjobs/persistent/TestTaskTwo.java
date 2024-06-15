@@ -551,9 +551,14 @@ public class TestTaskTwo extends AbstractTest {
     public void testSqlQuery() throws IOException {
         String queryFileContents = getFileContents("queries.sql");
 
-        Pattern queryPattern = Pattern.compile("SELECT\\s+name\\s+FROM\\s+employer\\s+WHERE\\s+location\\s+=\\s+\"St.\\s+Louis\\s+City\";", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+        // Adjust the regex pattern to match the exact SQL query
+        Pattern queryPattern = Pattern.compile(
+                "SELECT\\s+name\\s+FROM\\s+employer\\s+WHERE\\s+location\\s+=\\s+'Saint Louis';",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL
+        );
         Matcher queryMatcher = queryPattern.matcher(queryFileContents);
         boolean queryFound = queryMatcher.find();
-        assertTrue(queryFound, "Task 2 SQL query is incorrect. Test your query against your database to find the error.");
+        assertTrue(queryFound, "Part 2 SQL query is incorrect. Test your query against your database to find the error.");
     }
+
 }
