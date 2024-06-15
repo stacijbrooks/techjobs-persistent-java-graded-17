@@ -20,7 +20,7 @@ public class EmployerController {
     private EmployerRepository employerRepository;
 
     //Index method to list all employers. #2 in Controllers
-    @GetMapping("")
+    @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("employers", employerRepository.findAll());
         return "employers/index";
@@ -41,8 +41,7 @@ public class EmployerController {
         }
         //Save the valid employer object. Task 2, Controller #3
         employerRepository.save(newEmployer);
-        model.addAttribute("employers", employerRepository.findAll());
-        return "employers.index";
+        return "redirect:/employers/";
     }
 
     @GetMapping("view/{employerId}")
