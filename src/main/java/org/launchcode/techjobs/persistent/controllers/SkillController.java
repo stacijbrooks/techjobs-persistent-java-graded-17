@@ -23,7 +23,7 @@ public class SkillController {
     private SkillRepository skillRepository;
 
     // Index method to list all skills
-    @GetMapping(value = "/")
+    @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("title", "All Skills");
         model.addAttribute("skills", skillRepository.findAll());
@@ -61,18 +61,19 @@ public class SkillController {
     // Mapping HTTP GET requests to "/view/{skillId}" to this method
     @GetMapping("view/{skillId}")
     public String displayViewSkill(Model model, @PathVariable int skillId) {
-        // Find the skill by its ID using the repository
+
+        // Retrieve the skill from the database using the skillId parameter
         Optional<Skill> optSkill = skillRepository.findById(skillId);
 
-        // Check if the skill is present in the optional
+        // Check if the skill exists in the database
         if (optSkill.isPresent()) {
-            // If present, get the skill from the optional
+            // If the skill is found, retrieve it from the Optional
             Skill skill = optSkill.get();
 
-            // Add the skill to the model to pass it to the view
+            // Add the retrieved skill to the model attribute "skill"
             model.addAttribute("skill", skill);
 
-            // Return the view name "skills/view" to display the skill
+            // Return the name of the view template to display the skill details
             return "skills/view";
         } else {
             // If the skill is not found, redirect to the skills index page

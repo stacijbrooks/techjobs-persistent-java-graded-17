@@ -18,24 +18,28 @@ public abstract class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Name is required")
+    @NotNull(message = "Name is required")
     @Size(min = 1, max = 100, message = "Name must be between 1 and 100 characters")
     private String name;
 
     public int getId() {
+
         return id;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     @Override
     public String toString() {
+
         return name;
     }
 
@@ -49,6 +53,7 @@ public abstract class AbstractEntity {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(id);
     }
 

@@ -15,8 +15,8 @@ public class Job extends AbstractEntity {
 
     // Task 3: Job has a many-to-one association with Employer.
     @ManyToOne
-    @JoinColumn(name = "employer_id") // Specifies the foreign key column
-    @NotNull(message = "Employer is required")
+//    @JoinColumn(name = "employer_id") // Specifies the foreign key column
+//    @NotNull(message = "Employer is required")
     private Employer employer;
 
     @ManyToMany
