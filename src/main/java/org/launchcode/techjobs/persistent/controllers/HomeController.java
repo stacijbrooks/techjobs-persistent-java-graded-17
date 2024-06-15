@@ -25,95 +25,64 @@ import java.util.Optional;
 public class HomeController {
 
     @Autowired
-    private JobRepository jobRepository;
-
-    @Autowired
     private EmployerRepository employerRepository;
 
-    //Task 4: Update HomeController skillRepository
     @Autowired
     private SkillRepository skillRepository;
 
-
+    @Autowired
+    private JobRepository jobRepository;
 
     @RequestMapping("/")
     public String index(Model model) {
+
         model.addAttribute("title", "MyJobs");
+        model.addAttribute("jobs", jobRepository.findAll());
         return "index";
     }
 
-    //Updated & Modified for Task 3
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-	model.addAttribute("title", "Add Job");
+        model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
         return "add";
     }
 
-
-    //Updated & Modified for Task 3 and updated for Task 4.
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
-                                    Errors errors, Model model,
-                                    @RequestParam int employerId,
-                                    @RequestParam List<Integer> skills) {
+                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
-            model.addAttribute("employers", employerRepository.findAll());
-            model.addAttribute("skills", skillRepository.findAll());
             return "add";
         }
 
+        Optional<Employer> optEmployer = employerRepository.findById(employerId);
+        if(optEmployer.isPresent()) {
+            Employer employer= optEmployer.get();
+            newJob.setEmployer(employer);
+        }
 
-        // Retrieve the selected skills using the list of skill IDs
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-        // Assign the retrieved skills to the newJob object
         newJob.setSkills(skillObjs);
-
-        // Retrieve the selected employer using the employerId. Updated during Task 4.
-        Optional<Employer> employerResult = employerRepository.findById(employerId);
-        if (employerResult.isEmpty()) {
-            model.addAttribute("title", "Add Job");
-            model.addAttribute("employers", employerRepository.findAll());
-            model.addAttribute("skills", skillRepository.findAll());
-            model.addAttribute("employerError", "Invalid employer ID");
-            return "add";
-
-//        Optional<Employer> employerResult = employerRepository.findById(employerId);
-//        if (employerResult.isPresent()) {
-//            Employer employer = employerResult.get();
-//            // Assign the retrieved employer to the newJob object
-//            newJob.setEmployer(employer);
-//        } else {
-//            model.addAttribute("title", "Add Job");
-//            model.addAttribute("employers", employerRepository.findAll());
-//            model.addAttribute("skills", skillRepository.findAll());
-//            return "add";
-        }
-
-        //Task 4: Added this to HomeController
-        Employer employer = employerResult.get();
-        newJob.setEmployer(employer);
-
-        // Save the new job to the database
         jobRepository.save(newJob);
+
         return "redirect:";
     }
 
-    //Updated for Task 4.
+
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
-        Optional<Job> jobResult = jobRepository.findById(jobId);
-        if (jobResult.isEmpty()) {
-            model.addAttribute("title", "Invalid Job ID");
-            return "redirect:/";
-        }
 
-        Job job = jobResult.get();
-        model.addAttribute("job", job);
+        Optional<Job> optJob = jobRepository.findById(jobId);
+        if (optJob.isPresent()) {
+            Job job = (Job) optJob.get();
+            model.addAttribute("job", job);
+
+        }
         return "view";
     }
+
 }
