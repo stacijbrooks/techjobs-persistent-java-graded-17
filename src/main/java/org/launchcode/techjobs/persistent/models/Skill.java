@@ -28,11 +28,11 @@ public class Skill extends AbstractEntity {
     public Skill() {
     }
 
-    public Skill(String description, List<Job> jobs) {
-        super();
-        this.description = description;
-        this.jobs = jobs;
-    }
+//    public Skill(String description, List<Job> jobs) {
+//        super();
+//        this.description = description;
+//        this.jobs = jobs;
+//    }
 
     //Getters and Setters
 
