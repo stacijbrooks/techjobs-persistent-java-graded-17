@@ -1,4 +1,5 @@
 --Part 1
+
 --id INT
 --employer VARCHAR(255)
 --name VARCHAR(255)
@@ -6,7 +7,10 @@
 SELECT * FROM techjobs.job;
 
 --Part 2
-SELECT name FROM employer WHERE location = "Saint Louis";
+
+SELECT name
+FROM employer
+WHERE location = 'Saint Louis';
 
 --Part 3
 
